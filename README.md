@@ -27,3 +27,4 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
+#### Link: https://5dc4e61266be35321732ee52--medic-calc.netlify.com/
