@@ -142,25 +142,52 @@ class App extends Component {
     }
   };
 
+  apoBConvertToGL = () => {
+    const { apoB, apButton } = this.state;
+    if (apButton === "gl") {
+      return apoB;
+    } else {
+      return this.convertMGDLToGL(apoB);
+    }
+  };
+
+  tgConvertToMMOL = () => {
+    const { tg, tgButton } = this.state;
+    if (tgButton === "mmol") {
+      return tg;
+    } else {
+      return this.convertMMOLToMGDL(tg);
+    }
+  };
+
+  tcConvertToMMOL = () => {
+    const { tc, tcButton } = this.state;
+    if (tcButton === "mmol") {
+      return tc;
+    } else {
+      return this.convertMMOLToMGDL(tc);
+    }
+  };
+
   calculate = () => {
     const { apoB, tc, tg } = this.state;
 
     //Normal Apo B < 1.2g/l
-    if (apoB < 1.2) {
-      if (tg < 1.5) {
+    if (this.apoBConvertToGL(apoB) < 1.2) {
+      if (this.tgConvertToMMOL(tg) < 1.5) {
         return "Normal";
       } else {
         // Hyper TG>= 1.5mmol
-        if (tg >= 10) {
+        if (this.tgConvertToMMOL(tg) >= 10) {
           // TG: ABpoB
-          if (apoB >= 0.75) {
+          if (this.apoBConvertToGL(apoB) >= 0.75) {
             return "Chylomicrons + VLDL, Type 1 hyperchylomicronemia";
           } else {
             return "Chylomicrons, Type 1, Type 1 hyperchylomicronemia";
           }
         } else {
           // TG:Apob < 10
-          if (tc >= 0.2) {
+          if (this.tcConvertToMMOL(tc) >= 0.2) {
             return "Chylomicrons + VLDL remnants, Type 3 Familial dysbetalipoproteinemia";
           } else {
             return "VLDL, type V Familial hypertriglyceridemia";
@@ -170,7 +197,7 @@ class App extends Component {
       //Hyper Apo B >= 1.2g/l
     } else {
       // Normal TG
-      if (tg < 1.5) {
+      if (this.tgConvertToMMOL(tg) < 1.5) {
         return "LDL, type IIa Familial/polygenic hypercholesterolemia";
       } else {
         // Hyper TG
@@ -197,6 +224,7 @@ class App extends Component {
 
   render() {
     const { apButton, tcButton, tgButton, apoB, tc, tg, result } = this.state;
+    console.log(this.apoBConvertToGL(apoB));
     return (
       <StyledApp>
         <h2>Calculator</h2>
@@ -231,36 +259,9 @@ class App extends Component {
               </button>
             </div>
           </label>
-          <label htmlFor="">
-            <span className="label-name">Trigylcerides (Tri)</span>
-            <div className="input">
-              <input
-                required
-                type="number"
-                name="tc"
-                value={tc}
-                onChange={e => this.handleInputChange(e)}
-              />
-              <button
-                onClick={e => {
-                  this.handleSwitch(e, "tc");
-                  if (tcButton === "mmol") {
-                    this.setState({
-                      tc: this.convertMGDLToMMOL(tc)
-                    });
-                  } else {
-                    this.setState({
-                      tc: this.convertMMOLToMGDL(tc)
-                    });
-                  }
-                }}
-              >
-                <span>{tcButton}</span> <img src={swap} alt="" />
-              </button>
-            </div>
-          </label>
+
           <label htmlFor="" className="last">
-            <span className="label-name">Total Cholesterol (TChol)</span>
+            <span className="label-name">Trigylcerides (Tri)</span>
             <div className="input">
               <input
                 required
@@ -284,6 +285,35 @@ class App extends Component {
                 }}
               >
                 <span>{tgButton}</span> <img src={swap} alt="" />
+              </button>
+            </div>
+          </label>
+
+          <label htmlFor="">
+            <span className="label-name">Total Cholesterol (TChol)</span>
+            <div className="input">
+              <input
+                required
+                type="number"
+                name="tc"
+                value={tc}
+                onChange={e => this.handleInputChange(e)}
+              />
+              <button
+                onClick={e => {
+                  this.handleSwitch(e, "tc");
+                  if (tcButton === "mmol") {
+                    this.setState({
+                      tc: this.convertMGDLToMMOL(tc)
+                    });
+                  } else {
+                    this.setState({
+                      tc: this.convertMMOLToMGDL(tc)
+                    });
+                  }
+                }}
+              >
+                <span>{tcButton}</span> <img src={swap} alt="" />
               </button>
             </div>
           </label>
