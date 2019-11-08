@@ -31,4 +31,4 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 Builds the app for production to the `build` folder and deploys it to netlify.<br />
 
-#### Link: https://5dc4e61266be35321732ee52--medic-calc.netlify.com/
+#### Link: https://medic-calc.netlify.com/

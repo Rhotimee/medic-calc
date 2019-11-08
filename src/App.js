@@ -239,6 +239,8 @@ class App extends Component {
                 name="apoB"
                 value={apoB}
                 onChange={e => this.handleInputChange(e)}
+                tabindex="1"
+                autoFocus
               />
               <button
                 onClick={e => {
@@ -268,6 +270,7 @@ class App extends Component {
                 type="number"
                 name="tg"
                 value={tg}
+                tabindex="2"
                 onChange={e => this.handleInputChange(e)}
               />
               <button
@@ -297,6 +300,7 @@ class App extends Component {
                 type="number"
                 name="tc"
                 value={tc}
+                tabindex="3"
                 onChange={e => this.handleInputChange(e)}
               />
               <button
